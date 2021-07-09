@@ -1,0 +1,29 @@
+{
+  "name": "crm",
+  "version": "1.0.0",
+  "description": "My Personal CRM (Customer Relationship Management)",
+  "main": "index.js",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bineetNaidu/CRM.git"
+  },
+  "keywords": [],
+  "author": "BineetNaidu <bineetnaiduapps@gmail.com> (https://bineetnaidu.github.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bineetNaidu/CRM/issues"
+  },
+  "homepage": "https://github.com/bineetNaidu/CRM#readme",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
