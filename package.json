@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "create": "create-ts-api"
+    "create-api": "create-ts-api ./packages/api --mongodb"
   },
   "repository": {
     "type": "git",

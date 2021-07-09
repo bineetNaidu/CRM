@@ -1,40 +1,28 @@
 import 'express-async-errors';
-import cors from 'cors';
-import express from 'express';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import app from './app';
 import { ___prod___ } from './utils/contants';
-import { apiRoutes } from './api';
-import { NotFoundError } from './utils/notFoundError';
-import { ExpressErrorHandler } from './utils/ExpressErrorHandler';
 
-dotenv.config();
-const app = express();
+(async () => {
+  try {
+    if (!process.env.MONGO_URI) {
+      throw new Error('??>> {" MONGO_URI must be defined!! "} ');
+    }
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
 
-app.use(morgan('dev'));
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
-
-app.get('/', (_req, res) => {
-  res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
-  });
-});
-
-app.use('/api', apiRoutes);
-
-//! Not found page error
-app.all('*', NotFoundError);
-
-// ! Error Handlers
-app.use(ExpressErrorHandler);
-
-const port = process.env.PORT || 4242;
-app.listen(port, () => {
-  console.log(`~~~~ Server Started ~~~~`);
-  if (!___prod___) {
-    console.log(`**** VISIT: http://localhost:${port} ****`);
+    const port = process.env.PORT || 4242;
+    app.listen(port, () => {
+      console.log(`~~~~ Server Started ~~~~`);
+      if (!___prod___) {
+        console.log(`**** VISIT: http://localhost:${port} ****`);
+      }
+    });
+  } catch (e) {
+    console.error(e.message);
+    process.exit(1);
   }
-});
+})();
