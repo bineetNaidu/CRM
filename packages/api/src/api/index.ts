@@ -3,6 +3,7 @@ import {
   createCustomer,
   getAllCustomers,
   getCustomer,
+  updateCustomer,
 } from '../controllers/customer';
 
 const r = Router();
@@ -14,6 +15,6 @@ r.get('/', (_req, res) => {
 });
 
 r.route('/customers').get(getAllCustomers).post(createCustomer);
-r.route('/customers/:id').get(getCustomer);
+r.route('/customers/:id').get(getCustomer).put(updateCustomer);
 
 export { r as apiRoutes };

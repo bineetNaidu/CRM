@@ -36,3 +36,17 @@ export const getCustomer = async (req: Request, res: Response) => {
     success: !!customer,
   });
 };
+
+export const updateCustomer = async (req: Request, res: Response) => {
+  const customer = await Customer.findById(req.params.id);
+
+  if (!customer) throw new Error('Customer Was Not Found!');
+
+  await customer.set(req.body);
+  const updatedCustomer = await customer.save();
+
+  res.json({
+    data: updatedCustomer,
+    updated: !!customer,
+  });
+};
