@@ -50,3 +50,16 @@ export const updateCustomer = async (req: Request, res: Response) => {
     updated: !!customer,
   });
 };
+
+export const deleteCustomer = async (req: Request, res: Response) => {
+  const customer = await Customer.findById(req.params.id);
+
+  if (!customer) throw new Error('Customer Was Not Found!');
+
+  await customer.remove();
+
+  res.json({
+    deletedCustomerId: customer.id,
+    deleted: !!customer,
+  });
+};
