@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "create": "create-ts-api"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/bineetNaidu/CRM#readme",
   "devDependencies": {
+    "create-ts-api": "^1.5.5",
     "lerna": "^4.0.0"
   }
 }
