@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createTweet, getAllTweets } from '../controllers/tweet';
+import { createCustomer, getAllCustomers } from '../controllers/customer';
 
 const r = Router();
 
@@ -9,7 +9,6 @@ r.get('/', (_req, res) => {
   });
 });
 
-r.get('/tweets', getAllTweets);
-r.post('/tweets', createTweet);
+r.route('/customers').get(getAllCustomers).post(createCustomer);
 
 export { r as apiRoutes };
