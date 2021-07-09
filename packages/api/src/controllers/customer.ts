@@ -32,7 +32,7 @@ export const getCustomer = async (req: Request, res: Response) => {
   const customer = await Customer.findById(req.params.id);
 
   res.json({
-    data: customer,
+    data: customer ?? null,
     success: !!customer,
   });
 };
