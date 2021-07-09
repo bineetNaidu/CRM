@@ -27,3 +27,12 @@ export const getAllCustomers = async (_req: Request, res: Response) => {
     success: true,
   });
 };
+
+export const getCustomer = async (req: Request, res: Response) => {
+  const customer = await Customer.findById(req.params.id);
+
+  res.json({
+    data: customer,
+    success: !!customer,
+  });
+};

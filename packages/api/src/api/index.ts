@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { createCustomer, getAllCustomers } from '../controllers/customer';
+import {
+  createCustomer,
+  getAllCustomers,
+  getCustomer,
+} from '../controllers/customer';
 
 const r = Router();
 
@@ -10,5 +14,6 @@ r.get('/', (_req, res) => {
 });
 
 r.route('/customers').get(getAllCustomers).post(createCustomer);
+r.route('/customers/:id').get(getCustomer);
 
 export { r as apiRoutes };
