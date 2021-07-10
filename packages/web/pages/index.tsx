@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Box, Heading } from '@chakra-ui/layout';
 import {
   Input,
@@ -11,10 +13,27 @@ import { FiSearch } from 'react-icons/fi';
 import { GrAdd } from 'react-icons/gr';
 import CreateCustomerModal from '../components/CreateCustomerModal';
 import { useCustomerStore } from '../lib/customer.store';
+import type { ICustomer } from '@crm/common';
+import { axios } from '../lib/axios';
 
-export default function Home() {
+type Data = {
+  data: ICustomer[];
+  length: number;
+  success: boolean;
+};
+
+export default function Home({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const customers = useCustomerStore((s) => s.customers);
+  const { customers, setCustomer } = useCustomerStore();
+
+  useEffect(() => {
+    if (data) {
+      setCustomer(data);
+    }
+  }, [data, setCustomer]);
+
   return (
     <Box mx="5">
       <CreateCustomerModal isOpen={isOpen} onClose={onClose} />
@@ -42,3 +61,10 @@ export default function Home() {
     </Box>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { data } = await axios.get<Data>('/customers');
+  return {
+    props: { data },
+  };
+};
