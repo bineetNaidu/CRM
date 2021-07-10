@@ -1,9 +1,10 @@
 import create from 'zustand';
+import type { ICustomer } from '@crm/common';
 
 interface IState {
-  customers: any[];
-  setCustomer: (customers: any[]) => void;
-  addCustomer: (customer: any) => void;
+  customers: ICustomer[];
+  setCustomer: (customers: ICustomer[]) => void;
+  addCustomer: (customer: ICustomer) => void;
   deleteCustomer: (customerId: string) => void;
 }
 

@@ -1,14 +1,6 @@
 import mongoose from 'mongoose';
 import { StringAndRequired, StringAndRequiredAndUnique } from './utils';
-
-interface ICustomer {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  timezone: string;
-  avatar: string;
-}
+import { ICustomer } from '@crm/common';
 
 interface ICustomerDoc extends mongoose.Document {
   firstName: string;
