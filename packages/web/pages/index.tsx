@@ -8,6 +8,8 @@ import {
   HStack,
   Button,
   useDisclosure,
+  Spinner,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi';
 import { GrAdd } from 'react-icons/gr';
@@ -15,6 +17,7 @@ import CreateCustomerModal from '../components/CreateCustomerModal';
 import { useCustomerStore } from '../lib/customer.store';
 import type { ICustomer } from '@crm/common';
 import { axios } from '../lib/axios';
+import { CustomerCard } from '../components/CustomerCard';
 
 type Data = {
   data: ICustomer[];
@@ -30,7 +33,7 @@ export default function Home({
 
   useEffect(() => {
     if (data) {
-      setCustomer(data);
+      setCustomer(data.data);
     }
   }, [data, setCustomer]);
 
@@ -58,6 +61,14 @@ export default function Home({
           Add Customer
         </Button>
       </HStack>
+
+      <SimpleGrid my="5" columns={[1, 2, 3]} spacing={10}>
+        {!customers ? (
+          <Spinner />
+        ) : (
+          customers.map((c) => <CustomerCard customer={c} key={c.id} />)
+        )}
+      </SimpleGrid>
     </Box>
   );
 }
