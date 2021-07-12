@@ -1,5 +1,11 @@
 import { Router } from 'express';
 import {
+  createNote,
+  deleteNote,
+  updateNote,
+  getAllNotesByCustomer,
+} from '../controllers/notes';
+import {
   createCustomer,
   deleteCustomer,
   getAllCustomers,
@@ -9,16 +15,13 @@ import {
 
 const r = Router();
 
-r.get('/', (_req, res) => {
-  res.json({
-    msg: 'Hello API',
-  });
-});
-
 r.route('/customers').get(getAllCustomers).post(createCustomer);
 r.route('/customers/:id')
   .get(getCustomer)
   .put(updateCustomer)
   .delete(deleteCustomer);
+
+r.route('/customers/:id/notes').get(getAllNotesByCustomer).post(createNote);
+r.route('/customers/:id/notes/:noteId').delete(deleteNote).put(updateNote);
 
 export { r as apiRoutes };
