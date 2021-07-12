@@ -4,7 +4,21 @@ import { axios } from '../../lib/axios';
 import { GetServerSideProps } from 'next';
 import { FiEdit, FiMail, FiPhone, FiTrash } from 'react-icons/fi';
 import { IoMdTimer } from 'react-icons/io';
-import { Avatar, Box, Button, Flex, Stack, Text } from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Stack,
+  Text,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from '@chakra-ui/react';
+import { useCustomerStore } from '../../lib/customer.store';
+import { useRouter } from 'next/dist/client/router';
 
 type Data = {
   data: ICustomer;
@@ -16,6 +30,17 @@ interface Props {
 }
 
 const Customer: FC<Props> = ({ data }) => {
+  const { deleteCustomer } = useCustomerStore();
+  const r = useRouter();
+
+  const handleDeleteCustomer = async () => {
+    const res = await axios.delete(`/customers/${data.data.id}`);
+    console.log(res.data);
+    if (res.data.deleted && res.data.deletedCustomerId) {
+      deleteCustomer(res.data.deletedCustomerId);
+      r.push('/');
+    }
+  };
   return (
     <Box px="5">
       <Flex alignItems="center">
@@ -38,15 +63,68 @@ const Customer: FC<Props> = ({ data }) => {
             <IoMdTimer /> <Text ml="2">{data.data.timezone}</Text>
           </Flex>
         </Box>
-        <Stack direction="row" spacing={4} ml="4">
-          <Button leftIcon={<FiTrash />} colorScheme="red" variant="outline">
-            Delete
-          </Button>
-          <Button rightIcon={<FiEdit />} colorScheme="purple" variant="outline">
-            Edit
-          </Button>
-        </Stack>
+        <Box>
+          <Stack direction="row" spacing={4} ml="4">
+            <Button
+              size="sm"
+              leftIcon={<FiTrash />}
+              colorScheme="red"
+              variant="outline"
+              onClick={handleDeleteCustomer}
+            >
+              Delete
+            </Button>
+            <Button
+              size="sm"
+              rightIcon={<FiEdit />}
+              colorScheme="purple"
+              variant="outline"
+            >
+              Edit
+            </Button>
+          </Stack>
+          <Stack direction="row" spacing={4} ml="4" mt="2">
+            <Button
+              size="sm"
+              leftIcon={<FiMail />}
+              colorScheme="linkedin"
+              variant="outline"
+            >
+              Send Email
+            </Button>
+            <Button
+              size="sm"
+              rightIcon={<FiPhone />}
+              colorScheme="green"
+              variant="outline"
+            >
+              Make A Call
+            </Button>
+          </Stack>
+        </Box>
       </Flex>
+      <Tabs isFitted variant="enclosed" my="5" defaultIndex={1}>
+        <TabList mb="1em">
+          <Tab>Overview</Tab>
+          <Tab>Deals</Tab>
+          <Tab>Notes</Tab>
+          <Tab>Activities</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <p>Overview Tab</p>
+          </TabPanel>
+          <TabPanel>
+            <p>Deals Tab</p>
+          </TabPanel>
+          <TabPanel>
+            <p>Notes Tab</p>
+          </TabPanel>
+          <TabPanel>
+            <p>Activities Tab</p>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </Box>
   );
 };
