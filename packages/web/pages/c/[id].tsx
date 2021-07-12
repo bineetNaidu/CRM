@@ -16,9 +16,11 @@ import {
   Tab,
   TabPanels,
   TabPanel,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useCustomerStore } from '../../lib/customer.store';
 import { useRouter } from 'next/dist/client/router';
+import EditCustomerModal from '../../components/EditCustomerModal';
 
 type Data = {
   data: ICustomer;
@@ -31,6 +33,7 @@ interface Props {
 
 const Customer: FC<Props> = ({ data }) => {
   const { deleteCustomer } = useCustomerStore();
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const r = useRouter();
 
   const handleDeleteCustomer = async () => {
@@ -43,6 +46,11 @@ const Customer: FC<Props> = ({ data }) => {
   };
   return (
     <Box px="5">
+      <EditCustomerModal
+        customer={data.data}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       <Flex alignItems="center">
         <Avatar src={data.data.avatar} name={data.data.firstName} size="2xl" />
         <Box ml="4">
@@ -79,6 +87,7 @@ const Customer: FC<Props> = ({ data }) => {
               rightIcon={<FiEdit />}
               colorScheme="purple"
               variant="outline"
+              onClick={onOpen}
             >
               Edit
             </Button>
