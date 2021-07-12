@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { StringAndRequired, StringAndRequiredAndUnique } from './utils';
-import { ICustomer } from '@crm/common';
+import { ICustomer, INote } from '@crm/common';
 
 interface ICustomerDoc extends mongoose.Document {
   firstName: string;
@@ -9,6 +9,7 @@ interface ICustomerDoc extends mongoose.Document {
   phoneNumber: string;
   timezone: string;
   avatar: string;
+  notes: INote[] | string[];
 }
 
 interface ICustomerModel extends mongoose.Model<ICustomerDoc> {
@@ -23,6 +24,12 @@ const CustomerSchema = new mongoose.Schema(
     phoneNumber: StringAndRequiredAndUnique,
     timezone: StringAndRequired,
     avatar: StringAndRequired,
+    notes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Note',
+      },
+    ],
   },
   {
     timestamps: true,
