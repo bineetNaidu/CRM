@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { StringAndRequired, StringAndRequiredAndUnique } from './utils';
 import { ICustomer, INote } from '@crm/common';
+import { Note } from './Note';
 
 interface ICustomerDoc extends mongoose.Document {
   firstName: string;
@@ -46,6 +47,16 @@ const CustomerSchema = new mongoose.Schema(
 CustomerSchema.statics.build = (data: ICustomer) => {
   return new Customer(data);
 };
+
+CustomerSchema.post('remove', async function (doc) {
+  if (doc) {
+    await Note.deleteMany({
+      _id: {
+        $in: doc.notes,
+      },
+    });
+  }
+});
 
 const Customer = mongoose.model<ICustomerDoc, ICustomerModel>(
   'Customer',
