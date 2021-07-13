@@ -35,7 +35,7 @@ export const CreateNoteFormCard: FC<Props> = ({ customerId }) => {
       textAlign={'center'}
     >
       <Formik
-        initialValues={{ body: '', category: 'planning', bgColor: '#3d4a91' }}
+        initialValues={{ body: '', bgColor: '#3d4a91' }}
         onSubmit={async (values, { setSubmitting, setValues }) => {
           const { data } = await axios.post<{
             data: INote;
@@ -45,22 +45,13 @@ export const CreateNoteFormCard: FC<Props> = ({ customerId }) => {
 
           if (data.created && data.success) {
             addNote(data.data);
-            setValues({ body: '', category: 'planning', bgColor: '#3d4a91' });
+            setValues({ body: '', bgColor: '#3d4a91' });
             setSubmitting(false);
           }
         }}
       >
         {({ isSubmitting, getFieldProps, setFieldValue, values }) => (
           <Form>
-            <Select
-              placeholder="Select Category"
-              {...getFieldProps('category')}
-            >
-              <option value="planning">planning</option>
-              <option value="inProgress">inProgress</option>
-              <option value="finalized">finalized</option>
-              <option value="done">done</option>
-            </Select>
             <Textarea
               placeholder="Your Note"
               {...getFieldProps('body')}
