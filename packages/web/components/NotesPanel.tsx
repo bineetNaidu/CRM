@@ -4,6 +4,7 @@ import { useNotesStore } from '../lib/notes.store';
 import type { INote } from '@crm/common';
 import { Box, Text, Flex } from '@chakra-ui/react';
 import { CreateNoteFormCard } from './CreateNoteFormCard';
+import { NoteCard } from './NoteCard';
 
 interface Props {
   customerId: string;
@@ -37,6 +38,9 @@ const NotesPanel: FC<Props> = ({ customerId }) => {
         Your Notes ({notes.length})
       </Text>
       <Flex>
+        {notes.map((n) => (
+          <NoteCard note={n} key={n.id} />
+        ))}
         <CreateNoteFormCard customerId={customerId} />
       </Flex>
     </Box>
