@@ -39,7 +39,7 @@ const NotesPanel: FC<Props> = ({ customerId }) => {
       </Text>
       <Flex wrap="wrap">
         {notes.map((n) => (
-          <NoteCard note={n} key={n.id} />
+          <NoteCard note={n} key={n.id} customerId={customerId} />
         ))}
         <CreateNoteFormCard customerId={customerId} />
       </Flex>
