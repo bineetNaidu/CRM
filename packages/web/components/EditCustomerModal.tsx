@@ -27,7 +27,7 @@ interface Props {
 
 const EditCustomerModal: FC<Props> = ({ isOpen, onClose, customer }) => {
   const toast = useToast();
-  const store = useCustomerStore();
+  const { updateCustomer } = useCustomerStore();
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay />
@@ -50,6 +50,9 @@ const EditCustomerModal: FC<Props> = ({ isOpen, onClose, customer }) => {
               updated: boolean;
               success: boolean;
             }>(`/customers/${customer.id!}`, values);
+            if (data.updated) {
+              updateCustomer(data.data.id!, data.data);
+            }
             setSubmitting(false);
             toast({
               isClosable: true,
