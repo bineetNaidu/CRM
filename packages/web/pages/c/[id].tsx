@@ -39,7 +39,6 @@ const Customer: FC<Props> = ({ data }) => {
 
   const handleDeleteCustomer = async () => {
     const res = await axios.delete(`/customers/${data.data.id}`);
-    console.log(res.data);
     if (res.data.deleted && res.data.deletedCustomerId) {
       deleteCustomer(res.data.deletedCustomerId);
       r.push('/');

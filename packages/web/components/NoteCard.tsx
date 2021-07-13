@@ -16,7 +16,7 @@ export const NoteCard: FC<Props> = ({ note }) => {
       boxShadow={'2xl'}
       rounded={'lg'}
       p={6}
-      mx="4"
+      m="4"
       position="relative"
     >
       <Badge position="absolute" top="4" right="4">

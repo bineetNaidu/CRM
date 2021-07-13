@@ -37,7 +37,7 @@ const NotesPanel: FC<Props> = ({ customerId }) => {
       <Text color="gray.500" fontSize="xl">
         Your Notes ({notes.length})
       </Text>
-      <Flex>
+      <Flex wrap="wrap">
         {notes.map((n) => (
           <NoteCard note={n} key={n.id} />
         ))}
