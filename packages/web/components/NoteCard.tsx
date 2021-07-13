@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useCallback, useRef } from 'react';
 import {
   Box,
   IconButton,
@@ -26,7 +26,17 @@ interface Props {
 export const NoteCard: FC<Props> = ({ note, customerId }) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const textareaRef = useRef<any>(null);
-  const { updateNote } = useNotesStore((s) => s);
+  const { updateNote, deleteNote } = useNotesStore((s) => s);
+
+  const handleDelete = useCallback(async () => {
+    const { data } = await axios.delete<{
+      deleted: boolean;
+      deletedNoteId: string;
+    }>(`/customers/${customerId}/notes/${note.id}`);
+    if (data.deleted) {
+      deleteNote(data.deletedNoteId);
+    }
+  }, [customerId, deleteNote, note.id]);
 
   return (
     <Box
@@ -48,6 +58,7 @@ export const NoteCard: FC<Props> = ({ note, customerId }) => {
           aria-label="Delete button"
           mr="2"
           size="sm"
+          onClick={handleDelete}
           icon={<FiTrash />}
         />
 
