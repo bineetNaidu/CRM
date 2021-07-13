@@ -112,7 +112,7 @@ const Customer: FC<Props> = ({ data }) => {
           </Stack>
         </Box>
       </Flex>
-      <Tabs isFitted variant="enclosed" my="5" defaultIndex={1}>
+      <Tabs isFitted variant="enclosed" my="5" defaultIndex={0}>
         <TabList mb="1em">
           <Tab>Overview</Tab>
           <Tab>Deals</Tab>

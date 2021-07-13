@@ -4,6 +4,7 @@ import type { INote } from '@crm/common';
 interface IState {
   notes: INote[];
   clearNotes: () => void;
+  setNotes: (notes: INote[]) => void;
   addNote: (note: INote) => void;
   deleteNote: (noteId: string) => void;
   updateNote: (noteId: string, updatedNote: INote) => void;
@@ -12,6 +13,7 @@ interface IState {
 export const useNotesStore = create<IState>((set) => ({
   notes: [],
   clearNotes: () => set((s) => ({ notes: [] })),
+  setNotes: (data) => set((s) => ({ notes: data })),
   addNote: (newNote) => set((s) => ({ notes: [...s.notes, newNote] })),
   deleteNote: (id) =>
     set((s) => ({
