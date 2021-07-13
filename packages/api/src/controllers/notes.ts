@@ -3,13 +3,12 @@ import { Customer } from '../models/Customer';
 import { Note } from '../models/Note';
 
 export const createNote = async (req: Request, res: Response) => {
-  const { body, bgColor, category } = req.body;
+  const { body, bgColor } = req.body;
   const customer = await Customer.findById(req.params.id);
   if (!customer) throw new Error('Customer Was Not Found!');
   const note = await Note.build({
     body,
     bgColor,
-    category,
   }).save();
 
   customer.notes.push(note.id);

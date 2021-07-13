@@ -1,11 +1,10 @@
 import mongoose from 'mongoose';
 import { StringAndRequired } from './utils';
-import type { INote, NoteCategoryTypes } from '@crm/common';
+import type { INote } from '@crm/common';
 
 interface INoteDoc extends mongoose.Document {
   body: string;
   bgColor: string;
-  category: NoteCategoryTypes;
 }
 
 interface INoteModel extends mongoose.Model<INoteDoc> {
@@ -18,11 +17,6 @@ const NoteSchema = new mongoose.Schema(
     bgColor: {
       type: String,
       default: '#fff',
-    },
-    category: {
-      type: String,
-      enum: ['planning', 'inProgress', 'finalized', 'done'],
-      default: 'planning',
     },
   },
   {
