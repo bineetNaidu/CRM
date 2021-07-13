@@ -9,15 +9,10 @@ export interface ICustomer {
   notes: INote[] | string[];
 }
 
-export type NoteCategoryTypes =
-  | 'planning'
-  | 'inProgress'
-  | 'finalized'
-  | 'done';
+export type CategoryTypes = 'planning' | 'inProgress' | 'finalized' | 'done';
 
 export interface INote {
   id?: string;
   body: string;
   bgColor?: string;
-  category: NoteCategoryTypes;
 }
