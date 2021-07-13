@@ -2,14 +2,15 @@ import { FC, useEffect, useCallback } from 'react';
 import { axios } from '../lib/axios';
 import { useNotesStore } from '../lib/notes.store';
 import type { INote } from '@crm/common';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, Flex } from '@chakra-ui/react';
+import { CreateNoteFormCard } from './CreateNoteFormCard';
 
 interface Props {
   customerId: string;
 }
 
 const NotesPanel: FC<Props> = ({ customerId }) => {
-  const { setNotes, clearNotes, notes } = useNotesStore();
+  const { setNotes, clearNotes, notes } = useNotesStore((s) => s);
 
   const handleGetNotes = useCallback(async () => {
     const { data } = await axios.get<{
@@ -33,9 +34,11 @@ const NotesPanel: FC<Props> = ({ customerId }) => {
   return (
     <Box>
       <Text color="gray.500" fontSize="xl">
-        Your Notes
+        Your Notes ({notes.length})
       </Text>
-      <pre>{JSON.stringify(notes, null, 2)}</pre>
+      <Flex>
+        <CreateNoteFormCard customerId={customerId} />
+      </Flex>
     </Box>
   );
 };
