@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Box, Heading } from '@chakra-ui/layout';
 import {
@@ -8,15 +8,15 @@ import {
   HStack,
   Button,
   useDisclosure,
-  Spinner,
   SimpleGrid,
 } from '@chakra-ui/react';
-import { FiSearch } from 'react-icons/fi';
+import { FiCheck, FiSearch } from 'react-icons/fi';
 import { GrAdd } from 'react-icons/gr';
 import CreateCustomerModal from '../components/CreateCustomerModal';
 import { useCustomerStore } from '../lib/customer.store';
 import type { ICustomer } from '@crm/common';
 import { axios } from '../lib/axios';
+import { Formik, Form } from 'formik';
 import { CustomerCard } from '../components/CustomerCard';
 
 type Data = {
@@ -30,6 +30,27 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { customers, setCustomer } = useCustomerStore();
+  const [filters, setFilters] = useState<{
+    data: ICustomer[];
+    isFiltered: boolean;
+  }>({
+    data: [],
+    isFiltered: false,
+  });
+
+  const handleFuzzSearch = useCallback(async (query: string) => {
+    const { data } = await axios.get<{
+      data: ICustomer[];
+      length: number;
+      success: boolean;
+    }>(`/customers/search?name=${query}`);
+    if (data.success) {
+      setFilters({
+        data: data.data,
+        isFiltered: true,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -42,13 +63,44 @@ export default function Home({
       <CreateCustomerModal isOpen={isOpen} onClose={onClose} />
       <Heading>{customers.length} People</Heading>
       <HStack spacing={['5']}>
-        <InputGroup my="4" width="96">
-          <InputLeftElement pointerEvents="none">
-            <FiSearch color="gray.300" />
-          </InputLeftElement>
-          <Input type="text" placeholder="Search People" rounded="3xl" />
-        </InputGroup>
-
+        <Formik
+          initialValues={{ query: '' }}
+          onSubmit={async (values, { setSubmitting, setValues }) => {
+            await handleFuzzSearch(values.query);
+            setValues({ query: '' });
+            setSubmitting(false);
+          }}
+        >
+          {({ getFieldProps }) => (
+            <Form>
+              <InputGroup my="4" width="96">
+                <InputLeftElement pointerEvents="none">
+                  <FiSearch color="gray.300" />
+                </InputLeftElement>
+                <Input
+                  type="text"
+                  placeholder="Search People"
+                  rounded="3xl"
+                  {...getFieldProps('query')}
+                />
+                <button type="submit" hidden>
+                  Search!
+                </button>
+              </InputGroup>
+            </Form>
+          )}
+        </Formik>
+        {filters.isFiltered && (
+          <Button
+            leftIcon={<FiCheck />}
+            colorScheme="whiteAlpha"
+            variant="outline"
+            color="gray.500"
+            onClick={() => setFilters({ isFiltered: false, data: [] })}
+          >
+            Clear Filter?
+          </Button>
+        )}
         <Button
           leftIcon={<GrAdd />}
           colorScheme="gray"
@@ -63,11 +115,9 @@ export default function Home({
       </HStack>
 
       <SimpleGrid my="5" columns={[1, 2, 3]} spacing={10}>
-        {!customers ? (
-          <Spinner />
-        ) : (
-          customers.map((c) => <CustomerCard customer={c} key={c.id} />)
-        )}
+        {filters.isFiltered
+          ? filters.data.map((c) => <CustomerCard key={c.id} customer={c} />)
+          : customers.map((c) => <CustomerCard customer={c} key={c.id} />)}
       </SimpleGrid>
     </Box>
   );
