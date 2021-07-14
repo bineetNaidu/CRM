@@ -11,11 +11,13 @@ import {
   getAllCustomers,
   getCustomer,
   updateCustomer,
+  searchCustomer,
 } from '../controllers/customer';
 
 const r = Router();
 
 r.route('/customers').get(getAllCustomers).post(createCustomer);
+r.get('/customers/search', searchCustomer);
 r.route('/customers/:id')
   .get(getCustomer)
   .put(updateCustomer)
