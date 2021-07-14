@@ -1,5 +1,18 @@
 import { Request, Response } from 'express';
+import { escapeRegex } from '../utils/excapeRegex';
 import { Customer } from '../models/Customer';
+
+export const searchCustomer = async (req: Request, res: Response) => {
+  const { name } = req.query;
+  const regex = new RegExp(escapeRegex((name as string) ?? ''), 'gi');
+  const customers = await Customer.find().where('firstName').regex(regex);
+
+  res.json({
+    data: customers,
+    length: customers.length,
+    success: true,
+  });
+};
 
 export const createCustomer = async (req: Request, res: Response) => {
   const { firstName, lastName, email, phoneNumber, timezone, avatar } =
