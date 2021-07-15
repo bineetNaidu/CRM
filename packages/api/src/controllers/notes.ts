@@ -61,6 +61,6 @@ export const deleteNote = async (req: Request, res: Response) => {
 
   res.json({
     deletedNoteId: note.id,
-    deleted: !!Note,
+    deleted: !!note,
   });
 };

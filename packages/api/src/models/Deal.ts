@@ -8,7 +8,7 @@ interface IDealDoc extends mongoose.Document {
   startDate: Date | string;
   endDate: Date | string;
   estimatedTime: number;
-  actualTime: number;
+  actualTime?: number;
   status: StatusTypes;
 }
 
@@ -23,7 +23,7 @@ const DealSchema = new mongoose.Schema(
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     estimatedTime: { type: Number, required: true },
-    actualTime: { type: Number, required: true },
+    actualTime: { type: Number },
     status: {
       type: String,
       required: true,

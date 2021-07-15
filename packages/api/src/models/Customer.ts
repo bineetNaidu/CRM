@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { StringAndRequired, StringAndRequiredAndUnique } from './utils';
-import { ICustomer, INote } from '@crm/common';
+import { ICustomer, IDeal, INote } from '@crm/common';
 import { Note } from './Note';
+import { Deal } from './Deal';
 
 interface ICustomerDoc extends mongoose.Document {
   firstName: string;
@@ -11,6 +12,7 @@ interface ICustomerDoc extends mongoose.Document {
   timezone: string;
   avatar: string;
   notes: INote[] | string[];
+  deals: IDeal[] | string[];
 }
 
 interface ICustomerModel extends mongoose.Model<ICustomerDoc> {
@@ -59,6 +61,11 @@ CustomerSchema.post('remove', async function (doc) {
     await Note.deleteMany({
       _id: {
         $in: doc.notes,
+      },
+    });
+    await Deal.deleteMany({
+      _id: {
+        $in: doc.deals,
       },
     });
   }

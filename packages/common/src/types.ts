@@ -25,6 +25,6 @@ export interface IDeal {
   startDate: Date | string;
   endDate: Date | string;
   estimatedTime: number;
-  actualTime: number;
+  actualTime?: number;
   status: StatusTypes;
 }
