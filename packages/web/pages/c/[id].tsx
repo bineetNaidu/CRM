@@ -22,6 +22,7 @@ import { useCustomerStore } from '../../lib/customer.store';
 import { useRouter } from 'next/dist/client/router';
 import EditCustomerModal from '../../components/EditCustomerModal';
 import NotesPanel from '../../components/NotesPanel';
+import DealsPanel from '../../components/DealsPanel';
 
 type Data = {
   data: ICustomer;
@@ -124,7 +125,7 @@ const Customer: FC<Props> = ({ data }) => {
             <p>Overview Tab</p>
           </TabPanel>
           <TabPanel>
-            <p>Deals Tab</p>
+            <DealsPanel customerId={data.data.id!} />
           </TabPanel>
           <TabPanel>
             <NotesPanel customerId={data.data.id!} />
