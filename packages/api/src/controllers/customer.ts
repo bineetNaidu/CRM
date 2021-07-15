@@ -25,6 +25,7 @@ export const createCustomer = async (req: Request, res: Response) => {
     timezone,
     avatar,
     notes: [],
+    deals: [],
   }).save();
   res.json({
     data: customer,

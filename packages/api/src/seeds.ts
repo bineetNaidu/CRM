@@ -30,6 +30,7 @@ export async function seedCustomers(count = 10) {
       avatar: faker.image.avatar(),
       timezone: faker.address.timeZone(),
       notes: [],
+      deals: [],
     };
     c.push(customer);
   }

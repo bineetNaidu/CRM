@@ -31,6 +31,12 @@ const CustomerSchema = new mongoose.Schema(
         ref: 'Note',
       },
     ],
+    deals: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Deal',
+      },
+    ],
   },
   {
     timestamps: true,
