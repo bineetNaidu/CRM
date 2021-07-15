@@ -14,6 +14,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "axios": "^0.21.1",
+    "dayjs": "^1.10.6",
     "formik": "^2.2.9",
     "framer-motion": "^4",
     "next": "11.0.1",

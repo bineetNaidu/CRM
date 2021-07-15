@@ -3,6 +3,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { IDeal } from '../../common/src';
 import { axios } from '../lib/axios';
 import { useDealsStore } from '../lib/deals.store';
+import DealCard from './DealCard';
 
 interface Props {
   customerId: string;
@@ -36,10 +37,9 @@ const DealsPanel: FC<Props> = ({ customerId }) => {
         Your Deals ({deals.length})
       </Text>
       <Flex wrap="wrap">
-        {/* {deals.map((n) => (
-        <DealCard Deal={n} key={n.id} customerId={customerId} />
-      ))} */}
-        <pre>{JSON.stringify(deals, null, 2)}</pre>
+        {deals.map((d) => (
+          <DealCard deal={d} key={d.id} customerId={customerId} />
+        ))}
       </Flex>
     </Box>
   );
