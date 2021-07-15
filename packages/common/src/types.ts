@@ -7,12 +7,24 @@ export interface ICustomer {
   timezone: string;
   avatar: string;
   notes: INote[] | string[];
+  deals: IDeal[] | string[];
 }
 
-export type CategoryTypes = 'planning' | 'inProgress' | 'finalized' | 'done';
+export type StatusTypes = 'planning' | 'inProgress' | 'finalized' | 'done';
 
 export interface INote {
   id?: string;
   body: string;
   bgColor?: string;
+}
+
+export interface IDeal {
+  id?: string;
+  name: string;
+  description: string;
+  startDate: Date | string;
+  endDate: Date | string;
+  estimatedTime: number;
+  actualTime: number;
+  status: StatusTypes;
 }
