@@ -53,65 +53,75 @@ const Customer: FC<Props> = ({ data }) => {
         onClose={onClose}
       />
       <Flex alignItems="center">
-        <Avatar src={data.data.avatar} name={data.data.firstName} size="2xl" />
-        <Box ml="4">
-          <Text color="gray.600">ID: {data.data.id}</Text>
-          <Text fontSize="3xl" fontWeight="bold">
-            {data.data.firstName} {data.data.lastName}
-          </Text>
-        </Box>
-        <Box ml="4">
-          <Flex alignItems="center" color="gray.400">
-            <FiMail /> <Text ml="2">{data.data.email}</Text>
-          </Flex>
-          <Flex alignItems="center" color="gray.400">
-            <FiPhone />
-            <Text ml="2">{data.data.phoneNumber}</Text>
-          </Flex>
-          <Flex alignItems="center" color="gray.400">
-            <IoMdTimer /> <Text ml="2">{data.data.timezone}</Text>
-          </Flex>
-        </Box>
-        <Box>
-          <Stack direction="row" spacing={4} ml="4">
-            <Button
-              size="sm"
-              leftIcon={<FiTrash />}
-              colorScheme="red"
-              variant="outline"
-              onClick={handleDeleteCustomer}
-            >
-              Delete
-            </Button>
-            <Button
-              size="sm"
-              rightIcon={<FiEdit />}
-              colorScheme="purple"
-              variant="outline"
-              onClick={onOpen}
-            >
-              Edit
-            </Button>
-          </Stack>
-          <Stack direction="row" spacing={4} ml="4" mt="2">
-            <Button
-              size="sm"
-              leftIcon={<FiMail />}
-              colorScheme="linkedin"
-              variant="outline"
-            >
-              Send Email
-            </Button>
-            <Button
-              size="sm"
-              rightIcon={<FiPhone />}
-              colorScheme="green"
-              variant="outline"
-            >
-              Make A Call
-            </Button>
-          </Stack>
-        </Box>
+        <Flex alignItems="center" flexDirection={['column', 'column', 'row']}>
+          <Avatar
+            src={data.data.avatar}
+            name={data.data.firstName}
+            size="2xl"
+          />
+          <Box ml="4">
+            <Text color="gray.600" display={['none', 'block']}>
+              ID: {data.data.id}
+            </Text>
+            <Text fontSize="3xl" fontWeight="bold">
+              {data.data.firstName} {data.data.lastName}
+            </Text>
+          </Box>
+        </Flex>
+        <Flex flexDirection={['column', 'column', 'row']}>
+          <Box ml="4">
+            <Flex alignItems="center" color="gray.400">
+              <FiMail /> <Text ml="2">{data.data.email}</Text>
+            </Flex>
+            <Flex alignItems="center" color="gray.400">
+              <FiPhone />
+              <Text ml="2">{data.data.phoneNumber}</Text>
+            </Flex>
+            <Flex alignItems="center" color="gray.400">
+              <IoMdTimer /> <Text ml="2">{data.data.timezone}</Text>
+            </Flex>
+          </Box>
+          <Box>
+            <Stack direction="row" spacing={4} ml="4">
+              <Button
+                size="sm"
+                leftIcon={<FiTrash />}
+                colorScheme="red"
+                variant="outline"
+                onClick={handleDeleteCustomer}
+              >
+                <Text display={['none', 'block']}>Delete</Text>
+              </Button>
+              <Button
+                size="sm"
+                rightIcon={<FiEdit />}
+                colorScheme="purple"
+                variant="outline"
+                onClick={onOpen}
+              >
+                <Text display={['none', 'block']}>Edit</Text>
+              </Button>
+            </Stack>
+            <Stack direction="row" spacing={4} ml="4" mt="2">
+              <Button
+                size="sm"
+                leftIcon={<FiMail />}
+                colorScheme="linkedin"
+                variant="outline"
+              >
+                <Text display={['none', 'block']}>Send Email</Text>
+              </Button>
+              <Button
+                size="sm"
+                rightIcon={<FiPhone />}
+                colorScheme="green"
+                variant="outline"
+              >
+                <Text display={['none', 'block']}>Make A Call</Text>
+              </Button>
+            </Stack>
+          </Box>
+        </Flex>
       </Flex>
       <Tabs isFitted variant="enclosed" my="5" defaultIndex={0}>
         <TabList mb="1em">

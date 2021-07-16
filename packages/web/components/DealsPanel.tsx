@@ -59,7 +59,7 @@ const DealsPanel: FC<Props> = ({ customerId }) => {
           New Deal
         </Button>
       </Flex>
-      <SimpleGrid columns={[2, 2, 3]} spacing={20}>
+      <SimpleGrid columns={[2, 2, 3]} spacing={[5, 10, 20]}>
         <Box
           border="3px"
           my="2"
