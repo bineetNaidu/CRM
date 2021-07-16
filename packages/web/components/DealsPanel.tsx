@@ -54,7 +54,7 @@ const DealsPanel: FC<Props> = ({ customerId }) => {
       </Flex>
       <Flex wrap="wrap">
         {deals.map((d) => (
-          <DealCard deal={d} key={d.id} customerId={customerId} />
+          <DealCard deal={d} key={d.id!} customerId={customerId} />
         ))}
       </Flex>
     </Box>

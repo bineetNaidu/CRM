@@ -1,18 +1,34 @@
-import { FC, useState } from 'react';
-import { Badge, Box, Flex, Text, Tooltip } from '@chakra-ui/react';
+import { FC, useState, useCallback } from 'react';
+import { Badge, Box, Flex, IconButton, Text, Tooltip } from '@chakra-ui/react';
 import { FcCheckmark } from 'react-icons/fc';
 import type { IDeal } from '../../common/src';
 import dayjs from 'dayjs';
 import { IoMdTimer } from 'react-icons/io';
+import { FiCheckCircle, FiEdit, FiTrash } from 'react-icons/fi';
+import { axios } from '../lib/axios';
+import { useDealsStore } from '../lib/deals.store';
 
 interface Props {
   deal: IDeal;
   customerId: string;
 }
 
-const DealCard: FC<Props> = ({ deal }) => {
+const DealCard: FC<Props> = ({ deal, customerId }) => {
   const [truncated, setTruncated] = useState(true);
   const toggleTruncated = () => setTruncated(!truncated);
+  const updateDeal = useDealsStore((s) => s.updateDeal);
+
+  const handleDoneDeal = useCallback(async () => {
+    const { data } = await axios.put<{
+      data: IDeal;
+      updated: boolean;
+    }>(`/customers/${customerId}/deals/${deal.id}`, {
+      status: 'done',
+    });
+    if (data.updated) {
+      updateDeal(deal.id!, data.data);
+    }
+  }, [customerId, deal, updateDeal]);
 
   return (
     <Box
@@ -24,6 +40,30 @@ const DealCard: FC<Props> = ({ deal }) => {
       m="4"
       position="relative"
     >
+      <Box position="absolute" top="2" right="2">
+        <IconButton
+          size="xs"
+          variant="outline"
+          icon={<FiTrash />}
+          aria-label="Delete"
+          onClick={() => {}}
+        />
+        <IconButton
+          size="xs"
+          variant="outline"
+          icon={<FiEdit />}
+          aria-label="Edit"
+          mx="2"
+          onClick={() => {}}
+        />
+        <IconButton
+          size="xs"
+          variant="outline"
+          icon={<FiCheckCircle />}
+          aria-label="Done"
+          onClick={handleDoneDeal}
+        />
+      </Box>
       <Text fontSize="xl" display="flex" alignItems="center" fontWeight="bold">
         {deal.name}{' '}
         {deal.status === 'done' ? (
