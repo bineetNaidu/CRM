@@ -16,7 +16,17 @@ interface Props {
 const DealCard: FC<Props> = ({ deal, customerId }) => {
   const [truncated, setTruncated] = useState(true);
   const toggleTruncated = () => setTruncated(!truncated);
-  const updateDeal = useDealsStore((s) => s.updateDeal);
+  const { updateDeal, deleteDeal } = useDealsStore((s) => s);
+
+  const handleDeleteDeal = useCallback(async () => {
+    const { data } = await axios.delete<{
+      deletedDealId: string;
+      deleted: boolean;
+    }>(`/customers/${customerId}/deals/${deal.id}`);
+    if (data.deleted) {
+      deleteDeal(data.deletedDealId);
+    }
+  }, [customerId, deal.id, deleteDeal]);
 
   const handleDoneDeal = useCallback(async () => {
     const { data } = await axios.put<{
@@ -46,7 +56,7 @@ const DealCard: FC<Props> = ({ deal, customerId }) => {
           variant="outline"
           icon={<FiTrash />}
           aria-label="Delete"
-          onClick={() => {}}
+          onClick={handleDeleteDeal}
         />
         <IconButton
           size="xs"
