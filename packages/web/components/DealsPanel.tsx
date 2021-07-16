@@ -1,6 +1,13 @@
 import { FC, useCallback, useEffect } from 'react';
-import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
-import { IDeal } from '../../common/src';
+import {
+  Box,
+  Button,
+  Flex,
+  SimpleGrid,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
+import type { IDeal, StatusTypes } from '../../common/src';
 import { axios } from '../lib/axios';
 import { FiPlus } from 'react-icons/fi';
 import { useDealsStore } from '../lib/deals.store';
@@ -52,11 +59,118 @@ const DealsPanel: FC<Props> = ({ customerId }) => {
           New Deal
         </Button>
       </Flex>
-      <Flex wrap="wrap">
+      <SimpleGrid columns={[2, 2, 3]} spacing={20}>
+        <Box
+          border="3px"
+          my="2"
+          minH="sm"
+          borderColor="gray.600"
+          borderStyle="dashed"
+          rounded="md"
+          p="3"
+        >
+          <Text
+            fontWeight="bold"
+            textDecoration="underline"
+            letterSpacing="wide"
+            fontSize="lg"
+            color="gray.400"
+          >
+            Planning Deal
+          </Text>
+          <br />
+          {deals.map(
+            (d) =>
+              d.status === 'planning' && (
+                <DealCard deal={d} key={d.id!} customerId={customerId} />
+              )
+          )}
+        </Box>
+        <Box
+          border="3px"
+          my="2"
+          minH="sm"
+          borderColor="gray.600"
+          borderStyle="dashed"
+          rounded="md"
+          p="3"
+        >
+          <Text
+            fontWeight="bold"
+            textDecoration="underline"
+            letterSpacing="wide"
+            fontSize="lg"
+            color="gray.400"
+          >
+            InProgress Deal
+          </Text>
+          <br />
+
+          {deals.map(
+            (d) =>
+              d.status === 'inProgress' && (
+                <DealCard deal={d} key={d.id!} customerId={customerId} />
+              )
+          )}
+        </Box>
+        <Box
+          border="3px"
+          my="2"
+          minH="sm"
+          borderColor="gray.600"
+          borderStyle="dashed"
+          rounded="md"
+          p="3"
+        >
+          <Text
+            fontWeight="bold"
+            textDecoration="underline"
+            letterSpacing="wide"
+            fontSize="lg"
+            color="gray.400"
+          >
+            Finalized Deal
+          </Text>
+          <br />
+          {deals.map(
+            (d) =>
+              d.status === 'finalized' && (
+                <DealCard deal={d} key={d.id!} customerId={customerId} />
+              )
+          )}
+        </Box>
+        <Box
+          border="3px"
+          my="2"
+          minH="sm"
+          borderColor="gray.600"
+          borderStyle="dashed"
+          rounded="md"
+          p="3"
+        >
+          <Text
+            fontWeight="bold"
+            textDecoration="underline"
+            letterSpacing="wide"
+            fontSize="lg"
+            color="gray.400"
+          >
+            Done Deal
+          </Text>
+          <br />
+          {deals.map(
+            (d) =>
+              d.status === 'done' && (
+                <DealCard deal={d} key={d.id!} customerId={customerId} />
+              )
+          )}
+        </Box>
+      </SimpleGrid>
+      {/* <Flex wrap="wrap">
         {deals.map((d) => (
           <DealCard deal={d} key={d.id!} customerId={customerId} />
         ))}
-      </Flex>
+      </Flex> */}
     </Box>
   );
 };

@@ -57,7 +57,6 @@ const DealCard: FC<Props> = ({ deal, customerId }) => {
       boxShadow={'2xl'}
       rounded={'lg'}
       p={4}
-      m="4"
       position="relative"
     >
       <EditDealModal
