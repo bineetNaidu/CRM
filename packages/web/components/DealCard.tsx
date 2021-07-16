@@ -1,5 +1,13 @@
 import { FC, useState, useCallback } from 'react';
-import { Badge, Box, Flex, IconButton, Text, Tooltip } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Flex,
+  IconButton,
+  Text,
+  Tooltip,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { FcCheckmark } from 'react-icons/fc';
 import type { IDeal } from '../../common/src';
 import dayjs from 'dayjs';
@@ -7,6 +15,7 @@ import { IoMdTimer } from 'react-icons/io';
 import { FiCheckCircle, FiEdit, FiTrash } from 'react-icons/fi';
 import { axios } from '../lib/axios';
 import { useDealsStore } from '../lib/deals.store';
+import EditDealModal from './EditDealModal';
 
 interface Props {
   deal: IDeal;
@@ -17,6 +26,7 @@ const DealCard: FC<Props> = ({ deal, customerId }) => {
   const [truncated, setTruncated] = useState(true);
   const toggleTruncated = () => setTruncated(!truncated);
   const { updateDeal, deleteDeal } = useDealsStore((s) => s);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const handleDeleteDeal = useCallback(async () => {
     const { data } = await axios.delete<{
@@ -50,6 +60,12 @@ const DealCard: FC<Props> = ({ deal, customerId }) => {
       m="4"
       position="relative"
     >
+      <EditDealModal
+        customerId={customerId}
+        deal={deal}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       <Box position="absolute" top="2" right="2">
         <IconButton
           size="xs"
@@ -64,7 +80,7 @@ const DealCard: FC<Props> = ({ deal, customerId }) => {
           icon={<FiEdit />}
           aria-label="Edit"
           mx="2"
-          onClick={() => {}}
+          onClick={onOpen}
         />
         <IconButton
           size="xs"
