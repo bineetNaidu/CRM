@@ -27,7 +27,7 @@ export const createCustomer = async (req: Request, res: Response) => {
     notes: [],
     deals: [],
   }).save();
-  res.json({
+  res.status(201).json({
     data: customer,
     created: !!customer,
     success: true,

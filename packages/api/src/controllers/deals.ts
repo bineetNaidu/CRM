@@ -22,7 +22,7 @@ export const createDeal = async (req: Request, res: Response) => {
   customer.deals.push(deal._id);
   await customer.save();
 
-  res.json({
+  res.status(201).json({
     data: deal,
     created: !!deal,
     success: true,
