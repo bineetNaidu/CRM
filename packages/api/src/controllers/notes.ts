@@ -14,7 +14,7 @@ export const createNote = async (req: Request, res: Response) => {
   customer.notes.push(note.id);
   await customer.save();
 
-  res.json({
+  res.status(201).json({
     data: note,
     created: !!note,
     success: true,
