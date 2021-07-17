@@ -9,3 +9,11 @@ export const defaultCustomer = {
   notes: [],
   deals: [],
 };
+
+export const defaultDeal = {
+  name: 'test',
+  description: 'test',
+  startDate: new Date().toISOString(),
+  endDate: new Date(new Date().setHours(72)).toISOString(),
+  estimatedTime: 1633545000000,
+};
