@@ -1,15 +1,6 @@
 import request from 'supertest';
 import app from '../../app';
-
-const defaultCustomer = {
-  firstName: 'test',
-  lastName: 'test',
-  email: 'test@test.com',
-  phoneNumber: '(000) 000 0000',
-  timezone: 'Pacific time',
-  avatar:
-    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.w3schools.com%2Fbootstrap%2Fimg_avatar3.png&f=1&nofb=1',
-};
+import { defaultCustomer } from './test.utils';
 
 it('should return a 200 OK status', async () => {
   return request(app).get('/api/customers').expect(200);
