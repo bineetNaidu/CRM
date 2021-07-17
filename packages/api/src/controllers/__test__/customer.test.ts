@@ -26,7 +26,7 @@ it('should get a customer', async () => {
   const customer = await request(app)
     .post('/api/customers')
     .send(defaultCustomer)
-    .expect(200);
+    .expect(201);
   // get the customer
   const c = await request(app)
     .get(`/api/customers/${customer.body.data.id}`)
