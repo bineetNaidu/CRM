@@ -17,3 +17,8 @@ export const defaultDeal = {
   endDate: new Date(new Date().setHours(72)).toISOString(),
   estimatedTime: 1633545000000,
 };
+
+export const defaultSetting = {
+  crmName: 'test',
+  timezone: 'IST',
+};
