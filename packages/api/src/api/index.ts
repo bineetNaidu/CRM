@@ -19,6 +19,11 @@ import {
   getAllDealsByCustomer,
   updateDeal,
 } from '../controllers/deals';
+import {
+  createSetting,
+  getSetting,
+  updateSetting,
+} from '../controllers/setting';
 
 const r = Router();
 
@@ -36,5 +41,8 @@ r.route('/customers/:id/notes/:noteId').delete(deleteNote).put(updateNote);
 // Deals Route
 r.route('/customers/:id/deals').get(getAllDealsByCustomer).post(createDeal);
 r.route('/customers/:id/deals/:dealId').delete(deleteDeal).put(updateDeal);
+
+// Settings
+r.route('/settings').post(createSetting).get(getSetting).put(updateSetting);
 
 export { r as apiRoutes };
