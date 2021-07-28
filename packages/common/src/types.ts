@@ -32,11 +32,6 @@ export interface IDeal {
 export interface ISetting {
   id?: string;
   isDarkMode: boolean;
-  avatarUrl: string;
   timezone: string;
-  adminName: string;
-  adminEmail: string;
-  adminPhone: string;
-  adminPassword: string;
   crmName: string;
 }
