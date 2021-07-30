@@ -10,7 +10,7 @@ export const createInvoice = async (req: Request, res: Response) => {
 };
 
 export const getInvoices = async (_req: Request, res: Response) => {
-  const invoices = await Invoice.find({});
+  const invoices = await Invoice.find({}).populate('customer').exec();
   res.status(200).json({
     data: invoices,
     length: invoices.length,
@@ -27,7 +27,9 @@ export const getInvoice = async (req: Request, res: Response) => {
 };
 
 export const deleteInvoice = async (req: Request, res: Response) => {
-  const invoice = await Invoice.findById(req.params.invoiceId);
+  const invoice = await Invoice.findById(req.params.invoiceId)
+    .populate('customer')
+    .exec();
   if (!invoice) throw new Error('Invoice not found');
   await invoice.remove();
 
