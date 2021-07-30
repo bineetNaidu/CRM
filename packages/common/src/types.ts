@@ -35,3 +35,19 @@ export interface ISetting {
   timezone: string;
   crmName: string;
 }
+
+export interface IInvoice {
+  id?: string;
+  customer: string | ICustomer;
+  invoiceDate: Date | string;
+  payment: {
+    method: string;
+    transactionId: string;
+    cardNumber: string;
+  };
+  summary: string;
+  totalAmount: number;
+  tax?: number;
+  subTotal?: number;
+  shippingCost?: number;
+}
