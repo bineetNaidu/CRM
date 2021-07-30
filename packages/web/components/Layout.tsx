@@ -25,6 +25,7 @@ import {
   FiMenu,
   FiBell,
 } from 'react-icons/fi';
+import { BsPeopleFill } from 'react-icons/bs';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
@@ -38,7 +39,7 @@ interface LinkItemProps {
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Dashboard', icon: FiHome, href: '/' },
   { name: 'Deals', icon: RiMoneyDollarCircleLine, href: '/deals' },
-  { name: 'Explore', icon: FiCompass, href: '/explore' },
+  { name: 'Clients', icon: BsPeopleFill, href: '/clients' },
   { name: 'Favourites', icon: FiStar, href: '/favourites' },
   { name: 'Settings', icon: FiSettings, href: '/setting' },
 ];
