@@ -24,6 +24,12 @@ import {
   getSetting,
   updateSetting,
 } from '../controllers/setting';
+import {
+  createInvoice,
+  deleteInvoice,
+  getInvoice,
+  getInvoices,
+} from '../controllers/invoice';
 
 const r = Router();
 
@@ -41,6 +47,10 @@ r.route('/customers/:id/notes/:noteId').delete(deleteNote).put(updateNote);
 // Deals Route
 r.route('/customers/:id/deals').get(getAllDealsByCustomer).post(createDeal);
 r.route('/customers/:id/deals/:dealId').delete(deleteDeal).put(updateDeal);
+
+// Invoice Route
+r.route('/invoices').get(getInvoices).post(createInvoice);
+r.route('/invoices/:invoiceId').get(getInvoice).delete(deleteInvoice);
 
 // Settings
 r.route('/settings').post(createSetting).get(getSetting).put(updateSetting);
