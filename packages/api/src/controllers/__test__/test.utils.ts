@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 export const defaultCustomer = {
   firstName: 'test',
   lastName: 'test',
@@ -21,4 +22,19 @@ export const defaultDeal = {
 export const defaultSetting = {
   crmName: 'test',
   timezone: 'IST',
+};
+
+export const defaultInvoice = {
+  customer: mongoose.Types.ObjectId(),
+  invoiceDate: new Date().toISOString(),
+  payment: {
+    method: 'paypal',
+    transactionId: '123456789',
+    cardNumber: '12345VV678XX9',
+  },
+  summary: 'test summary',
+  totalAmount: 11150,
+  tax: 0,
+  subTotal: 11150,
+  shippingCost: 0,
 };
