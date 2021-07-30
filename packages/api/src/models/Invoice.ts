@@ -10,6 +10,7 @@ interface IInvoiceDoc extends mongoose.Document {
     transactionId: string;
     cardNumber: string;
   };
+  subject: string;
   summary: string;
   totalAmount: number;
   tax?: number;
@@ -34,6 +35,7 @@ const InvoiceSchema = new mongoose.Schema(
       transactionId: StringAndRequired,
       cardNumber: StringAndRequired,
     },
+    subject: StringAndRequired,
     summary: StringAndRequired,
     totalAmount: { type: Number, required: true },
     tax: Number,

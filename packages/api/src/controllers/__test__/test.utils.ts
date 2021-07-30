@@ -32,6 +32,7 @@ export const defaultInvoice = {
     transactionId: '123456789',
     cardNumber: '12345VV678XX9',
   },
+  subject: 'test subject',
   summary: 'test summary',
   totalAmount: 11150,
   tax: 0,
