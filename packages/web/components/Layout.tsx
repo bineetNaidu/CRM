@@ -38,7 +38,7 @@ interface LinkItemProps {
 
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Dashboard', icon: FiHome, href: '/' },
-  { name: 'Deals', icon: RiMoneyDollarCircleLine, href: '/deals' },
+  { name: 'Invoices', icon: RiMoneyDollarCircleLine, href: '/invoices' },
   { name: 'Clients', icon: BsPeopleFill, href: '/clients' },
   { name: 'Favourites', icon: FiStar, href: '/favourites' },
   { name: 'Settings', icon: FiSettings, href: '/setting' },
