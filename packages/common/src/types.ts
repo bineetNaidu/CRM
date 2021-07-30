@@ -45,6 +45,7 @@ export interface IInvoice {
     transactionId: string;
     cardNumber: string;
   };
+  subject: string;
   summary: string;
   totalAmount: number;
   tax?: number;
