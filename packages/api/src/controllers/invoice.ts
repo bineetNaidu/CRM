@@ -29,7 +29,9 @@ export const getInvoice = async (req: Request, res: Response) => {
 };
 
 export const deleteInvoice = async (req: Request, res: Response) => {
-  const invoice = await Invoice.findById(req.params.invoiceId);
+  const invoice = await Invoice.findById(req.params.invoiceId)
+    .populate('customer')
+    .exec();
   if (!invoice) throw new Error('Invoice not found');
   await invoice.remove();
 
