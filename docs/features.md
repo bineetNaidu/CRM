@@ -1,7 +1,7 @@
 # Features
 
 - [ ] **Invoices**
-  - [ ] Create/Read/Delete
+  - [x] Create/Read/Delete
   - [ ] Invoices can be printed out
 - [ ] **Mail**
   - [ ] can send mail.
