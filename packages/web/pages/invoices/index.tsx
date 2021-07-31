@@ -10,13 +10,18 @@ import {
   Flex,
   useColorModeValue,
   Icon,
+  Button,
+  useDisclosure,
+  Link,
 } from '@chakra-ui/react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import dayjs from 'dayjs';
 import { MdAttachMoney, MdDateRange } from 'react-icons/md';
+import CreateInvoiceModal from '../../components/CreateInvoiceModal';
 
 const Invoices = () => {
   const { setInvoices, invoices } = useInvoiceStore((s) => s);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const getInvoices = useCallback(async () => {
     const { data } = await axios.get<{
@@ -33,7 +38,14 @@ const Invoices = () => {
 
   return (
     <div>
-      <h1>INVOICE LIST</h1>
+      <Flex alignItems="center">
+        <Text>INVOICE LIST</Text>
+        <Button ml="5" onClick={onOpen} size="sm">
+          Add Invoice
+        </Button>
+      </Flex>
+
+      <CreateInvoiceModal isOpen={isOpen} onClose={onClose} />
 
       <Flex mt="5" wrap="wrap" justifyContent="center">
         {invoices.map((i) => (
@@ -55,17 +67,24 @@ const Invoices = () => {
               </Text>
             </VStack>
             <VStack>
-              <Text as={Link} href={`/invoices/${i.id}`}>
-                Invoice {i.id}
-              </Text>
+              <NextLink href={`/invoices/${i.id}`} passHref>
+                <Link>
+                  <Flex alignItems="center">
+                    <Text fontSize="md">Invoice</Text>{' '}
+                    <Text fontSize="x-small" pl="2" color="gray">
+                      {i.id}
+                    </Text>
+                  </Flex>
+                </Link>
+              </NextLink>
               <Text>{i.subject}</Text>
-              <Flex>
-                <Flex>
-                  <Icon mr="2" as={MdAttachMoney} />
+              <Flex justifyContent="space-between" w="full" px="3">
+                <Flex alignItems="center">
+                  <Icon as={MdAttachMoney} />
                   <Text>{i.totalAmount}</Text>
                 </Flex>
-                <Flex>
-                  <Icon mr="2" as={MdDateRange} />
+                <Flex alignItems="center">
+                  <Icon as={MdDateRange} />
                   <Text>{dayjs(i.invoiceDate).format('DD/MM/YYYY')}</Text>
                 </Flex>
               </Flex>
